@@ -1,14 +1,37 @@
 import dotenv from "dotenv";
 import connectDB from './db/index.js'
+import { app } from "./app.js";
 
 dotenv.config({
     path: './env'
 })
 
 
-connectDB();
+connectDB() // as it's a async method it returns a promise 
+.then(() =>{ // after DB connection is established , we start the server 
+
+    // include app.on part too
+    app.listen(process.env.PORT || 8000) // if not first then second execute 
+    console.log(`Server is running at port : ${process.env.PORT}`)
+}
+)
+.catch((err) => {
+
+    console.log("Mongo DB connection FAILED", err)
+
+})
 
 
+
+
+
+
+
+
+
+
+
+// changes made in .env file, doesn't restart the db connection by mongoose, it must be restarted manually 
 
 /*
 import express from 'express';
