@@ -1,5 +1,5 @@
     import mongoose, {Schema} from "mongoose";
-    import bcrypt from bcrypt;
+    import bcrypt from "bcrypt";
     import jwt from "jsonwebtoken"
 
     const userSchema = new Schema({
@@ -64,7 +64,7 @@ userSchema.pre("save", async function (next) {
     next()
 })  // before the data is saved pre function acts and save the password in an encrypted format
 
-userSchema.method.isPasswordCorrect = async function (password) { // allows to use own custom methods
+userSchema.methods.isPasswordCorrect = async function (password) { // allows to use own custom methods
     
     return await bcrypt.compare(password, this.password) // validating pwd
 
